@@ -92,10 +92,14 @@
                             <i class="fa-solid fa-arrow-left-long blue-text"></i>
                             @Html.ActionLink("Torna ai giochi", "Gioco", "Giochi", null, new { @class = "blue-text" })
                         </div>
-                        <form action="@Url.Action("AggiungiAlCarrello", "Carrello", new { id = Model.IdGioco })" method="post">
-                            @Html.AntiForgeryToken()
-                            <button type="submit" class="button-37"><i class="fa-solid fa-cart-plus"></i> Aggiungi al carrello</button>
-                        </form>
+
+                        @if (!User.Identity.Name.Equals(Model.Utenti.Username, StringComparison.OrdinalIgnoreCase))
+                        {
+                            <form action="@Url.Action("AggiungiAlCarrello", "Carrello", new { id = Model.IdGioco })" method="post">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="button-37"><i class="fa-solid fa-cart-plus"></i> Aggiungi al carrello</button>
+                            </form>
+                        }
                     </div>
                 </div>
             </div>

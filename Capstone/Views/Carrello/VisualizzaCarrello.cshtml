@@ -8,6 +8,38 @@
     .blue-text {
         color: #007BFF;
     }
+
+    .button-37, .button-38 {
+        background-color: #00FF00;
+        border: 1px solid #00FF00; 
+        border-radius: 4px;
+        color: #000000;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 400;
+        outline: none;
+        padding: 10px 25px;
+        text-align: center;
+        transition: transform 150ms, box-shadow 150ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
+
+        .button-37:hover, .button-38:hover {
+            box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+            transform: translateY(-2px);
+        }
+
+    .button-37 {
+        padding: 10px 30px;
+    }
+
+    .button-38 {
+        padding: 10px 30px;
+        background-color: #FF6600;
+        border: 1px solid #FF6600;
+    }
 </style>
 
 
@@ -43,7 +75,9 @@
                                                     <h6 class="mb-0">@tot.ToString("C2")</h6>
                                                 </div>
                                                 <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                                    <button class="deleteBtn" data-product-id="@item.IdDettaglioOrdine">Rimuovi dal Carrello</button>
+                                                    <button class="deleteBtn" data-product-id="@item.IdDettaglioOrdine" title="Rimuovi dal Carrello">
+                                                        <i class="fa-solid fa-xmark" style="color: #ff0000;"></i>
+                                                    </button>
                                                     <div id="errorMessage" style="color: red;"></div>
                                                 </div>
                                             </div>
@@ -51,15 +85,16 @@
                                     }
                                     else
                                     {
-                                        <p>Il tuo carrello è vuoto.</p>
+                                <div id="carrelloVuoto">
+                                    <p>Il tuo carrello è vuoto.</p>
+                                </div>
                                     }
                                     <hr class="my-4">
                                     <div class="pt-5">
-                                        <h6 class="mb-0">
-                                            <a href="Prodotti/CercaProdotti" class="text-body">
-                                                <i class="fas fa-long-arrow-alt-left me-2"></i>Continua i tuoi acquisti
-                                            </a>
-                                        </h6>
+                                        <div class="mb-0">
+                                                <i class="fa-solid fa-arrow-left-long blue-text"></i>
+                                                @Html.ActionLink("Torna ai giochi", "Gioco", "Giochi", null, new { @class = "blue-text" })
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -68,8 +103,8 @@
                                     <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
                                     <hr class="my-4">
                                     <div class="d-flex justify-content-between mb-5">
-                                        <h5 class="text-uppercase">Total price</h5>
-                                        <h5>
+                                        <h5 class="text-uppercase">Prezzo totale</h5>
+                                        <h5 id="totaleCarrello">
                                             @if (ViewBag.Totale != null)
                                             {
                                                 @ViewBag.Totale.ToString("C2")
@@ -81,10 +116,11 @@
                                         </h5>
                                     </div>
                                     <hr class="my-4">
-                                    <button type="button" class="btn btn-primary" data-mdb-ripple-color="dark">
-                                        Checkout
+                                    <button type="button" class="button-37" data-mdb-ripple-color="dark">
+                                        <i class="fa-solid fa-check"></i>Concludi ordine
                                     </button>
-                                    <button type="button" class="btn btn-danger" id="svuotaCarrello">
+                                    <button type="button" class="button-38" id="svuotaCarrello" data-ordine-id="@Model.">
+                                        <i class="fa-solid fa-trash-can" style="color: #000000;"></i>
                                         Svuota Carrello
                                     </button>
                                 </div>
@@ -103,32 +139,35 @@
     $(document).ready(function () {
         console.log("Script loaded.");
 
-        $(document).on("click", "#svuotaCarrello", function () {
+        $(document).on("click", ".svuotaCarrello", function () {
+            var ordineId = $(this).data('ordine-id');  // Utilizziamo un nome diverso per la variabile
+
             $.ajax({
-                method: 'POST',
-                url: '/Carrello/SvuotaCarrello', 
+                type: 'POST',
+                url: '/Carrello/SvuotaCarrello',
+                data: { ordineId: ordineId },
+                dataType: 'json',
                 success: function (data) {
                     console.log('Success:', data);
                     if (data.success) {
-                        // Ricarica la pagina o effettua altre azioni necessarie
                         location.reload();
                     } else {
-                        // Mostra un messaggio di errore in un elemento HTML dedicato, se necessario
-                        console.error('Errore durante lo svuotamento del carrello.');
+                        console.error('Error during cart emptying:', data.error);
+                        alert('Error during cart emptying: ' + data.error);
                     }
                 },
                 error: function (xhr, status, error) {
-                    console.error('Error:', error);
-                    // Mostra un messaggio di errore in un elemento HTML dedicato, se necessario
-                    console.error('Errore durante la richiesta AJAX.');
+                    console.error('Error during AJAX request:', error);
+                    alert('Error during AJAX request: ' + error);
+                },
+                complete: function (xhr, status) {
+                    console.log('Request completed with status:', status);
                 }
             });
         });
     });
 
-
-
-        $(document).ready(function () {
+         $(document).ready(function () {
     console.log("Script loaded.");
 
     $(document).on("click", ".deleteBtn", function () {
@@ -144,6 +183,16 @@
                 if (data.success) {
                     // Risali alla riga e rimuovila
                     btn.closest('.row').remove();
+
+                    // Aggiorna il prezzo totale
+                    $('#totaleCarrello').text(data.nuovoTotale.toFixed(2));
+
+                    // Mostra/nascondi il messaggio "Il tuo carrello è vuoto"
+                    if (data.nuovoTotale === 0) {
+                        $('#carrelloVuoto').show();
+                    } else {
+                        $('#carrelloVuoto').hide();
+                    }
                 } else {
                     // Mostra un messaggio di errore in un elemento HTML dedicato
                     $('#errorMessage').text('Si è verificato un errore durante la rimozione dal carrello.');

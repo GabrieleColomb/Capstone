@@ -58,56 +58,58 @@
         }
 
     .table i {
-        font-size: 1rem; 
+        font-size: 1rem;
         margin-right: 5px;
     }
 </style>
 
 <div class="container mt-5">
-    <table class="table table-striped" style="background-color: #F2F2F2;">
-        <thead>
-            <tr> 
-                <th>@Html.DisplayNameFor(model => model.Utenti.Username)</th>
-                <th>@Html.DisplayNameFor(model => model.TitoloDelGioco)</th>
-                <th>@Html.DisplayNameFor(model => model.Immagine)</th>
-                <th>@Html.DisplayNameFor(model => model.CategoriaGiochi.NomeCategoria)</th>
-                <th>@Html.DisplayNameFor(model => model.Prezzo)</th>
-                <th>@Html.DisplayNameFor(model => model.DataDiInserimento)</th>
-                <th>
-                    <a href="Giochi/Create">
-                        <i class="fa-solid fa-plus" style="color: #00FF00;"></i>
-                    </a>
-                </th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="table-responsive">
+        <table class="table table-striped" style="background-color: #F2F2F2;">
+            <thead>
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Utenti.Username)</td>
-                    <td>@Html.DisplayFor(modelItem => item.TitoloDelGioco)</td>
-                    <td>
-                        <div class="w-25">
-                            <img class="img-fluid" src="~/Content/img/@item.Immagine" alt="Alternate Text" />
-                        </div>
-                    </td>
-                    <td>@Html.DisplayFor(modelItem => item.CategoriaGiochi.NomeCategoria)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Prezzo)€</td>
-                    <td>@Html.DisplayFor(modelItem => item.DataDiInserimento)</td>
-                    <td>
-                        <a href="Giochi/Edit?id=@item.IdGioco">
-                            <i class="fa-regular fa-pen-to-square" style="color: #FFA500;"></i> 
+                    <th>@Html.DisplayNameFor(model => model.Utenti.Username)</th>
+                    <th>Titolo Del Gioco</th>
+                    <th>Immagine</th>
+                    <th>Categoria</th>
+                    <th>Prezzo</th>
+                    <th>Data Di Inserimento</th>
+                    <th>
+                        <a href="Giochi/Create">
+                            <i class="fa-solid fa-plus" style="color: #00FF00;"></i>
                         </a>
-                        <a href="Giochi/Details?id=@item.IdGioco">
-                            <i class="fa-solid fa-circle-info" style="color: #4B0082;"></i> 
-                        </a>
-                        <a href="Giochi/Delete?id=@item.IdGioco">
-                            <i class="fa-regular fa-trash-can" style="color: #FF0000;"></i> 
-                        </a>
-                    </td>
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.Utenti.Username)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TitoloDelGioco)</td>
+                        <td>
+                            <div class="w-25">
+                                <img class="img-fluid" src="~/Content/img/@item.Immagine" alt="Alternate Text" />
+                            </div>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.CategoriaGiochi.NomeCategoria)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Prezzo)€</td>
+                        <td>@Html.DisplayFor(modelItem => item.DataDiInserimento)</td>
+                        <td>
+                            <a href="Giochi/Edit?id=@item.IdGioco">
+                                <i class="fa-regular fa-pen-to-square" style="color: #FFA500;"></i>
+                            </a>
+                            <a href="Giochi/Details?id=@item.IdGioco">
+                                <i class="fa-solid fa-circle-info" style="color: #4B0082;"></i>
+                            </a>
+                            <a href="Giochi/Delete?id=@item.IdGioco">
+                                <i class="fa-regular fa-trash-can" style="color: #FF0000;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

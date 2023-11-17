@@ -59,26 +59,33 @@
 </style>
 
 <br />
-<h2>Giochi</h2>
+@{
+    var currentUser = User.Identity.Name; // Ottenere l'username dell'utente corrente
+}
+
 <div class="row">
     @foreach (Giochi giochi in Model)
     {
-        <div class="col-md-3 mb-4">
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
             <div class="card-giochi" style="background-color: #F2F2F2;">
                 <img src="~/Content/img/@giochi.Immagine" class="card-img-top img-fluid" alt="Gioco" style="height: 180px;">
                 <div class="card-body-gioco p-2">
-                    <h5 class="card-title m-0">@giochi.TitoloDelGioco</h5>
-                    <p class="card-text m-0">Creato da: @giochi.Utenti.Username</p>
-                    <p class="card-text m-0">Categoria: @giochi.CategoriaGiochi.NomeCategoria</p>
-                    <p class="card-text m-0">Prezzo: @giochi.Prezzo €</p>
+                    <h5 class="card-title m-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">@giochi.TitoloDelGioco</h5>
+                    <p class="card-text m-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Creato da: @giochi.Utenti.Username</p>
+                    <p class="card-text m-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Categoria: @giochi.CategoriaGiochi.NomeCategoria</p>
+                    <p class="card-text m-0" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Prezzo: @giochi.Prezzo €</p>
                 </div>
                 <div class="card-footer p-2 d-flex justify-content-between">
                     <a href="/Giochi/Details?id=@giochi.IdGioco" class="button-38 addCart">
                         <i class="fa-solid fa-circle-info"></i>
                     </a>
-                    @using (Html.BeginForm("AggiungiAlCarrello", "Carrello", new { id = giochi.IdGioco }, FormMethod.Post))
+                    @if (currentUser != giochi.Utenti.Username)
                     {
-                        <button type="submit" class="button-37"><i class="fa-solid fa-cart-plus"></i></button>
+                        <!-- L'utente corrente non è il possessore del gioco, mostra il bottone "Aggiungi al carrello" -->
+                        using (Html.BeginForm("AggiungiAlCarrello", "Carrello", new { id = giochi.IdGioco }, FormMethod.Post))
+                        {
+                            <button type="submit" class="button-37"><i class="fa-solid fa-cart-plus"></i></button>
+                        }
                     }
                 </div>
             </div>

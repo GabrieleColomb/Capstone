@@ -109,20 +109,26 @@ namespace Capstone.Controllers
             {
                 Debug.WriteLine($"RimuoviDalCarrello called with id: {id}");
 
-                    var dettaglioOrdine = Db.DettaglioOrdine.Find(id);
+                var dettaglioOrdine = Db.DettaglioOrdine.Find(id);
 
-                    if (dettaglioOrdine != null)
-                    {
-                        Db.DettaglioOrdine.Remove(dettaglioOrdine);
-                        Db.SaveChanges();
-                        Debug.WriteLine($"DettaglioOrdine with id {id} removed successfully.");
+                if (dettaglioOrdine != null)
+                {
+                    Db.DettaglioOrdine.Remove(dettaglioOrdine);
+                    Db.SaveChanges();
+                    Debug.WriteLine($"DettaglioOrdine with id {id} removed successfully.");
 
-                        // Aggiorna la sessione dopo la rimozione
-                        var updatedOrdine = Db.DettaglioOrdine.ToList();
-                        Session["Carrello"] = updatedOrdine;
-                    }
+                    // Calcola il nuovo totale e restituiscilo come parte della risposta JSON
+                    decimal nuovoTotale = CalcolaTotaleCarrello();
+                    Session["TotaleCarrello"] = nuovoTotale;
 
-                return Json(new { success = true });
+                    // Aggiorna la sessione dopo la rimozione
+                    var updatedOrdine = Db.DettaglioOrdine.ToList();
+                    Session["Carrello"] = updatedOrdine;
+
+                    return Json(new { success = true, nuovoTotale = nuovoTotale });
+                }
+
+                return Json(new { success = false, error = "DettaglioOrdine non trovato" });
             }
             catch (Exception ex)
             {
@@ -132,11 +138,47 @@ namespace Capstone.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult SvuotaCarrello()
+        private decimal CalcolaTotaleCarrello()
         {
-            Session.Remove("dettaglioOrdine");
-            return Json(new { success = true });
+            // Calcola il totale del carrello
+            int utenteId = Convert.ToInt32(Session["UtenteId"]);
+            var dettagliOrdine = Db.DettaglioOrdine
+                .Where(d => d.Ordine.UtenteId == utenteId)
+                .ToList();
+
+            return dettagliOrdine.Sum(d => d.Quantita * d.Giochi.Prezzo);
+        }
+
+        [HttpPost]
+        public ActionResult SvuotaCarrello(int ordineId)
+        {
+            try
+            {
+                if (Session["UtenteId"] == null)
+                {
+                    return Json(new { success = false, error = "Utente non autenticato" });
+                }
+
+                int utenteId = Convert.ToInt32(Session["UtenteId"]);
+
+                var ordine = Db.Ordine.SingleOrDefault(o => o.IdOrdine == ordineId && o.UtenteId == utenteId);
+
+                if (ordine != null)
+                {
+                    // Assuming you have a navigation property DettagliOrdine in the Ordine entity
+                    ordine.DettaglioOrdine.Clear();
+                    Db.SaveChanges();
+
+                    return Json(new { success = true });
+                }
+
+                return Json(new { success = false, error = "Nessun ordine da svuotare" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return Json(new { success = false, error = "Si è verificato un errore durante lo svuotamento del carrello." });
+            }
         }
     }
 }

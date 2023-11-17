@@ -83,58 +83,60 @@
     <div id="totalUtenti">
         <span>Totale utenti: <span id="totalUtentiCount">Caricamento...</span></span>
     </div>
-    <table class="table table-striped" style="background-color: #F2F2F2;">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Nome)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Username)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Indirizzo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Ruolo)
-                </th>
-                <th>
-
-                </th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="table-responsive">
+        <table class="table table-striped" style="background-color: #F2F2F2;">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Username)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Indirizzo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ruolo)
-                    </td>
-                    <td>
-                        <a href="Admin/Delete?id=@item.IdUtente">
-                            <i class="fa-regular fa-trash-can" style="color: #FF0000;"></i>
-                        </a>
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Username)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Indirizzo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ruolo)
+                    </th>
+                    <th>
+
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Username)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Indirizzo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ruolo)
+                        </td>
+                        <td>
+                            <a href="Admin/Delete?id=@item.IdUtente">
+                                <i class="fa-regular fa-trash-can" style="color: #FF0000;"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 @section Scripts {
