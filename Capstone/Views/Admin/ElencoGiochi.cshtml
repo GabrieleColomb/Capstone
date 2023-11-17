@@ -1,0 +1,172 @@
+﻿@model IEnumerable<Capstone.Models.Giochi>
+
+<style>
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+
+        .table th,
+        .table td {
+            padding: 0.75rem;
+            vertical-align: top;
+            border-top: 1px solid #000000;
+            width: 14.28%;
+        }
+
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #000000;
+            background-color: #00ff00;
+            color: #000000;
+        }
+
+        .table tbody + tbody {
+            border-top: 2px solid #F2F2F2;
+        }
+
+        .table .table {
+            background-color: #F2F2F2;
+        }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #F2F2F2;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #F2F2F2;
+    }
+
+    .table-primary,
+    .table-primary > th,
+    .table-primary > td {
+        background-color: #F2F2F2;
+    }
+
+    .table-hover .table-primary:hover {
+        background-color: #F2F2F2;
+    }
+
+        .table-hover .table-primary:hover > td,
+        .table-hover .table-primary:hover > th {
+            background-color: #F2F2F2;
+        }
+
+    .table i {
+        font-size: 1rem;
+        margin-right: 5px;
+    }
+
+    #totalGiochi {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #000000;
+        background-color: #f2f2f2;
+        padding: 5px 10px;
+        border-radius: 5px;
+        width: 150px;
+    }
+
+    #totalGiochiCount {
+        font-size: 18px;
+        color: #28a745;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container mt-5">
+    <div id="totalGiochi">
+        Giochi totali: <span id="totalGiochiCount">Caricamento...</span>
+    </div>
+    <table class="table table-striped" style="background-color: #F2F2F2;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoriaGiochi.NomeCategoria)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Utenti.Username)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TitoloDelGioco)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descrizione)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Prezzo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StatoDelGioco)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataDiInserimento)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Immagine)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoriaGiochi.NomeCategoria)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Utenti.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TitoloDelGioco)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descrizione)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prezzo)€
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StatoDelGioco)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataDiInserimento)
+                    </td>
+                    <td>
+                        <div class="w-250">
+                            <img class="img-fluid" src="~/Content/img/@item.Immagine" alt="Alternate Text" />
+                        </div>
+                    </td>
+                    <td>
+                        <a href="EliminaGiochi?id=@item.IdGioco">
+                            <i class="fa-regular fa-trash-can" style="color: #FF0000;"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
+        $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("GetTotalGiochi", "Admin")',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('#totalGiochiCount').text(data.TotalGiochi);
+            },
+            error: function () {
+                console.error('Errore nel recupero del numero totale di giochi.');
+            }
+        });
+        });
+</script>
+}

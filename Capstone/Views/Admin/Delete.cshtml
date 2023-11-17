@@ -1,0 +1,96 @@
+﻿@model Capstone.Models.Utenti
+
+<div class="container mt-5">
+    <style>
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .mt-auto {
+            margin-top: auto;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .button-37 {
+            background-color: #FF6600;
+            border: 1px solid #FF6600;
+            border-radius: 4px;
+            box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+            box-sizing: border-box;
+            color: #000000;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 400;
+            outline: none;
+            padding: 10px 25px;
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 150ms, box-shadow 150ms;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+            .button-37:hover {
+                box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+                transform: translateY(-2px);
+            }
+
+        .button-37 {
+            padding: 10px 30px;
+        }
+
+        .blue-text {
+            color: #007BFF;
+        }
+    </style>
+
+    <div class="card mb-3" style="width: 100%; background-color: #FFFFFF;">
+        <h3 class="text-center red-text" style="background-color: #00ff00; padding: 10px; color: #000;">Are you sure you want to delete this?</h3>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Nome)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Nome)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Email)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Email)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Password)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Password)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Username)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Username)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Indirizzo)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Indirizzo)</dd>
+
+                <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Ruolo)</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Ruolo)</dd>
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="button-container mt-auto">
+                    <div>
+                        <i class="fa-solid fa-arrow-left-long blue-text"></i>
+                        @Html.ActionLink("Torna alla lista", "Index", "Admin", null, new { @class = "blue-text" })
+                    </div>
+                    <button type="submit" class="button-37"><i class="fa-solid fa-trash-can"></i> Delete</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

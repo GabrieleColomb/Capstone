@@ -1,0 +1,99 @@
+﻿@model Capstone.Models.Giochi
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="container mt-5">
+    <style>
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        } 
+
+        .mt-auto {
+            margin-top: auto;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .button-37 {
+            background-color: #FF6600;
+            border: 1px solid #FF6600;
+            border-radius: 4px;
+            box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+            box-sizing: border-box;
+            color: #000000;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 400;
+            outline: none;
+            padding: 10px 25px;
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 150ms, box-shadow 150ms;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+            .button-37:hover {
+                box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+                transform: translateY(-2px);
+            }
+
+        .button-37 {
+            padding: 10px 30px;
+        }
+
+        .blue-text {
+            color: #007BFF;
+        }
+    </style>
+
+    <div class="card mb-3" style="width: 100%; background-color: #FFFFFF;">
+        <h3 class="text-center red-text" style="background-color: #00ff00; padding: 10px; color: #000;">Are you sure you want to delete this?</h3>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Categoria:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.CategoriaGiochi.NomeCategoria)</dd>
+
+                <dt class="col-sm-3">Titolo del Gioco:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.TitoloDelGioco)</dd>
+
+                <dt class="col-sm-3">Descrizione:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Descrizione)</dd>
+
+                <dt class="col-sm-3">Prezzo:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.Prezzo)€</dd>
+
+                <dt class="col-sm-3">Stato del Gioco:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.StatoDelGioco)</dd>
+
+                <dt class="col-sm-3">Data di Inserimento:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.DataDiInserimento)</dd>
+            </dl>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.IdGioco)
+                <div class="button-container mt-auto">                  
+                    <div>
+                        <i class="fa-solid fa-arrow-left-long blue-text"></i>
+                        @Html.ActionLink("Torna ai giochi", "Gioco", "Giochi", null, new { @class = "blue-text" })
+                    </div>
+                    <button type="submit" class="button-37"><i class="fa-solid fa-trash-can"></i> Delete</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+﻿@using Capstone.Models
+@model List<Giochi>
+
+@{
+    ViewBag.Title = "Gioco";
+}
+
+<style>
+    .card-giochi {
+        border: 1px solid #000000;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .card-footer {
+        padding: 1rem;
+        background-color: #F2F2F2;
+        border-top: 1px solid #F2F2F2;
+        border-radius: 0 0 8px 8px;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .button-37, .button-38 {
+        background-color: #00FF00;
+        border: 1px solid #00FF00;
+        border-radius: 4px;
+        color: #000000;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 400;
+        outline: none;
+        padding: 10px 25px;
+        text-align: center;
+        transition: transform 150ms, box-shadow 150ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
+
+        .button-37:hover, .button-38:hover {
+            box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+            transform: translateY(-2px);
+        }
+
+    .button-37 {
+        padding: 10px 30px;
+    }
+
+    .button-38 {
+        padding: 10px 30px;
+        background-color: #FF6600;
+        border: 1px solid #FF6600;
+    }
+</style>
+
+<br />
+<h2>Giochi</h2>
+<div class="row">
+    @foreach (Giochi giochi in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card-giochi" style="background-color: #F2F2F2;">
+                <img src="~/Content/img/@giochi.Immagine" class="card-img-top img-fluid" alt="Gioco" style="height: 180px;">
+                <div class="card-body-gioco p-2">
+                    <h5 class="card-title m-0">@giochi.TitoloDelGioco</h5>
+                    <p class="card-text m-0">Creato da: @giochi.Utenti.Username</p>
+                    <p class="card-text m-0">Categoria: @giochi.CategoriaGiochi.NomeCategoria</p>
+                    <p class="card-text m-0">Prezzo: @giochi.Prezzo €</p>
+                </div>
+                <div class="card-footer p-2 d-flex justify-content-between">
+                    <a href="/Giochi/Details?id=@giochi.IdGioco" class="button-38 addCart">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </a>
+                    @using (Html.BeginForm("AggiungiAlCarrello", "Carrello", new { id = giochi.IdGioco }, FormMethod.Post))
+                    {
+                        <button type="submit" class="button-37"><i class="fa-solid fa-cart-plus"></i></button>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

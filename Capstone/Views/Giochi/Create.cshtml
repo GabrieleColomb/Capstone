@@ -1,0 +1,119 @@
+﻿@model Capstone.Models.Giochi
+
+<style>
+    .button-37 {
+        background-color: #00FF00;
+        border: 1px solid #00FF00;
+        border-radius: 4px;
+        box-shadow: rgba(0, 0, 0, .1) 0 2px 4px 0;
+        box-sizing: border-box;
+        color: #000000;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 400;
+        outline: none;
+        padding: 10px 25px;
+        text-align: center;
+        transform: translateY(0);
+        transition: transform 150ms, box-shadow 150ms;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
+
+        .button-37:hover {
+            box-shadow: rgba(0, 0, 0, .15) 0 3px 9px 0;
+            transform: translateY(-2px);
+        }
+
+
+    .button-37 {
+        padding: 10px 30px;
+    }
+</style>
+
+@using (Html.BeginForm("Create", "Giochi", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-header text-center" style="background-color: #00ff00; padding: 20px;">
+                        <h4 class="card-title text-dark" style="font-size: 24px;">Inserisci qui il tuo gioco</h4>
+                    </div>
+                    <div class="card-body" style="background-color: #F2F2F2;">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group row mb-3">
+                            @Html.LabelFor(model => model.TitoloDelGioco, new { @class = "col-md-6 control-label" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.TitoloDelGioco, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.TitoloDelGioco, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            @Html.LabelFor(model => model.StatoDelGioco, new { @class = "col-md-6 control-label" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.StatoDelGioco, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.StatoDelGioco, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            @Html.LabelFor(model => model.Prezzo, new { @class = "col-md-6 control-label" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.Prezzo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Prezzo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            @Html.LabelFor(model => model.DataDiInserimento, new { @class = "col-md-6 control-label" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.DataDiInserimento, new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                @Html.ValidationMessageFor(model => model.DataDiInserimento, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            @Html.LabelFor(model => model.FotoGioco, "Immagine", new { @class = "col-md-6 control-label mb-0 text-dark" })
+                            <div class="col-md-6">
+                                <input type="file" name="FotoGioco" class="form-control" required accept="image/jpeg,image/png" />
+                                @Html.ValidationMessageFor(model => model.FotoGioco, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            @Html.LabelFor(model => model.CategoriaId, "Categoria", new { @class = "col-md-6 control-label" })
+                            <div class="col-md-6">
+                                @Html.DropDownList("CategoriaId", null, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CategoriaId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row mb-3">
+                            @Html.LabelFor(model => model.Descrizione, new { @class = "col-md-12 control-label text-left" })
+                            <div class="col-md-12">
+                                <textarea id="Descrizione" name="Descrizione" class="form-control" rows="5"></textarea>
+                                @Html.ValidationMessageFor(model => model.Descrizione, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-md-12 text-center">
+                                <input type="submit" value="Inserisci il tuo gioco" class="button-37" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
