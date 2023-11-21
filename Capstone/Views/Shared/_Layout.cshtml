@@ -8,6 +8,7 @@
     <link href="~/Content/Site.css" rel="stylesheet" />
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
@@ -28,12 +29,12 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAdmin">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">@Html.ActionLink("Lista utenti", "Index", "Admin", new { area = "" }, new { @class = "nav-link text-dark" })</li>
-                        <li class="nav-item">@Html.ActionLink("Lista giochi", "ElencoGiochi", "Admin", new { area = "" }, new { @class = "nav-link text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("Lista utenti", "Index", "Admin", new { area = "" }, new { @class = "nav-link text-dark animate__animated animate__bounce" })</li>
+                        <li class="nav-item">@Html.ActionLink("Lista giochi", "ElencoGiochi", "Admin", new { area = "" }, new { @class = "nav-link text-dark animate__animated animate__bounce" })</li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a href="@Url.Action("Logout", "Login", new { area = "" })" class="nav-link text-dark">
+                            <a href="@Url.Action("Logout", "Login", new { area = "" })" class="nav-link text-dark animate__animated animate__bounce">
                                 <i class="fa-solid fa-right-from-bracket" style="color: #000000;" title="Logout"></i>
                             </a>
                         </li>
@@ -54,18 +55,18 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavUser">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">@Html.ActionLink("Giochi", "Gioco", "Giochi", new { area = "" }, new { @class = "nav-link text-dark" })</li>
-                        <li class="nav-item">@Html.ActionLink("Inserisci il tuo annuncio", "Create", "Giochi", new { area = "" }, new { @class = "nav-link text-dark" })</li>
-                        <li class="nav-item">@Html.ActionLink("Visualizza i tuoi annunci", "Index", "Giochi", new { area = "" }, new { @class = "nav-link text-dark" })</li>
+                        <li class="nav-item">@Html.ActionLink("Giochi", "Gioco", "Giochi", new { area = "" }, new { @class = "nav-link text-dark animate__animated animate__bounce" })</li>
+                        <li class="nav-item">@Html.ActionLink("Inserisci il tuo annuncio", "Create", "Giochi", new { area = "" }, new { @class = "nav-link text-dark animate__animated animate__bounce" })</li>
+                        <li class="nav-item">@Html.ActionLink("Visualizza i tuoi annunci", "Index", "Giochi", new { area = "" }, new { @class = "nav-link text-dark animate__animated animate__bounce" })</li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item me-2">
-                            <a href="@Url.Action("VisualizzaCarrello", "Carrello", new { area = "" })" class="nav-link text-dark">
+                            <a href="@Url.Action("VisualizzaCarrello", "Carrello", new { area = "" })" class="nav-link text-dark animate__animated animate__bounce">
                                 <i class="fa-solid fa-cart-shopping" style="color: #000000;" title="Carrello"></i>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@Url.Action("Logout", "Login", new { area = "" })" class="nav-link text-dark">
+                            <a href="@Url.Action("Logout", "Login", new { area = "" })" class="nav-link text-dark animate__animated animate__bounce">
                                 <i class="fa-solid fa-right-from-bracket" style="color: #000000;" title="Logout"></i>
                             </a>
                         </li>
@@ -73,7 +74,6 @@
                 </div>
             </div>
         </nav>
-
     }
     else
     {
@@ -88,17 +88,17 @@
                 <div class="collapse navbar-collapse" id="navbarNavGuest">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link text-dark" })
+                            @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link text-dark animate__animated animate__bounce" })
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a href="@Url.Action("Registrazione", "Home", new { area = "" })" class="nav-link text-dark">
+                            <a href="@Url.Action("Registrazione", "Home", new { area = "" })" class="nav-link text-dark animate__animated animate__bounce">
                                 Registrati
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="@Url.Action("Login", "Login", new { area = "" })" class="nav-link text-dark">
+                            <a href="@Url.Action("Login", "Login", new { area = "" })" class="nav-link text-dark animate__animated animate__bounce">
                                 <i class="fa-solid fa-user" style="color: #000000;" title="Login"></i>
                             </a>
                         </li>
@@ -130,10 +130,10 @@
                 <!-- Section: Social media -->
                 <section class="mb-4">
                     <!-- Github -->
-                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fa-brands fa-github" style="color: #ffffff;"></i></a>
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fa-brands fa-github"></i></a>
 
                     <!-- Twitter -->
-                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fa-brands fa-discord" style="color: #ffffff;"></i></a>
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fa-brands fa-discord"></i></a>
 
                     <!-- Google -->
                     <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>
